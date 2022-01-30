@@ -1,0 +1,14 @@
+﻿using System;
+using Labb_3___Anropa_Databasen.Models;
+
+namespace Labb_3___Anropa_Databasen
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MainMenu mainMenu = new MainMenu();
+            MenuInteraction.RunMenu(mainMenu);
+        }
+    }
+}
