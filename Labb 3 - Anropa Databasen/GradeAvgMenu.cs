@@ -21,7 +21,7 @@ namespace Labb_3___Anropa_Databasen
             {
                 gradeNames.Add(item);
             }
-            
+
             Console.Clear();
             MenuInteraction.Headline(menuSections[selection][4..].ToUpper() + "\n");
 

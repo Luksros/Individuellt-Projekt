@@ -5,13 +5,14 @@ using System.Collections.Generic;
 // If you have enabled NRTs for your project, then un-comment the following line:
 // #nullable disable
 
-namespace Labb_3___Anropa_Databasen.Models
+namespace Labb_3___Anropa_Databasen
 {
-    public partial class Grade
+    public partial class ActiveCourses
     {
         public int Id { get; set; }
-        public string Grade1 { get; set; }
-        public decimal? GradeValue { get; set; }
-
+        public int CourseId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int ClassId { get; set; }
     }
 }

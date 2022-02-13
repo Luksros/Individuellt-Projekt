@@ -22,5 +22,7 @@ namespace Labb_3___Anropa_Databasen.Models
 
         public virtual Job Job { get; set; }
         public virtual ICollection<Course> Course { get; set; }
+        public DateTime DateOfHire { get; internal set; }
+        public decimal MonthlySalary { get; internal set; }
     }
 }

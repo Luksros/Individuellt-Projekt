@@ -21,29 +21,18 @@ namespace Labb_3___Anropa_Databasen
             switch (selection)
             {
                 case 2:
-                    List<Student> studentList = new List<Student>();
-                    List<Grade> gradeNames = new List<Grade>();
-                    List<Course> courses = new List<Course>();
-                    var stuCourse = MenuInteraction.Context.StudentsInCourses.Where(s => (s.GradeDate ?? default).CompareTo(DateTime.Now.AddMonths(-1)) > 0);
-                    foreach (var item in MenuInteraction.Context.Student)
-                    {
-                        studentList.Add(item);
-                    }                                 
-                    foreach (var item in MenuInteraction.Context.Grade)
-                    {
-                        gradeNames.Add(item);
-                    }                   
-                    foreach (var item in MenuInteraction.Context.Course)
-                    {
-                        courses.Add(item);
-                    }      
-                    
+                    var stuCourse = from stuC in MenuInteraction.Context.StudentsInCourses.Where(s => (s.GradeDate ?? default).CompareTo(DateTime.Now.AddMonths(-1)) > 0)
+                                    join stud in MenuInteraction.Context.Student on stuC.StudentId equals stud.Id
+                                    join grade in MenuInteraction.Context.Grade on stuC.GradeId equals grade.Id
+                                    join course in MenuInteraction.Context.Course on stuC.CourseId equals course.Id
+                                    select new {FName = stud.Fname, LName = stud.Lname, CoName = course.CourseName, grName = grade.Grade1, grDate = stuC.GradeDate };
+
                     MenuInteraction.Headline("VISA BETYG FRÅN SENASTE MÅNADEN\n"); 
                     foreach (var item in stuCourse)
                     {
-                        string space = new string(' ', (17 - ((studentList[item.StudentId - 1].Fname.Length) + (studentList[item.StudentId - 1].Lname.Length))));
-                        string space2 = new string(' ', 8 - courses[item.CourseId - 1].CourseName.Length);
-                        Console.WriteLine($"Namn: {studentList[item.StudentId - 1].Fname} {studentList[item.StudentId - 1].Lname} {space} | Kurs: {courses[item.CourseId-1].CourseName} {space2}| Betyg: {gradeNames[(item.GradeId ?? default) - 1].Grade1} | Datum: {item.GradeDate.Value.ToShortDateString()}");        
+                        string space = new string(' ', (17 - ((item.FName.Length) + (item.LName.Length))));
+                        string space2 = new string(' ', 8 - item.CoName.Length);
+                        Console.WriteLine($"Namn: {item.FName} {item.LName} {space} | Kurs: {item.CoName} {space2}| Betyg: {item.grName} | Datum: {item.grDate.Value.ToShortDateString()}");        
                     }
                     Escape();
                     break;

@@ -25,7 +25,7 @@ namespace Labb_3___Anropa_Databasen
             string tempPersId = Console.ReadLine();
 
             //Collected data is put into a new Employee object, that's added to the Employee DbSet. Changes are saved.
-            Employee tempEmp = new Employee() { Fname = tempFname, Lname = tempLname, PersonalId = tempPersId, JobId = selection };
+            Employee tempEmp = new Employee() { Fname = tempFname, Lname = tempLname, PersonalId = tempPersId, JobId = selection, DateOfHire = DateTime.Now };
             MenuInteraction.Context.Add(tempEmp);
             MenuInteraction.Context.SaveChanges();
             Console.WriteLine($"\n{tempFname} {tempLname} har lagts till bland de anställda!");

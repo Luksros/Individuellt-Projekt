@@ -14,20 +14,19 @@ namespace Labb_3___Anropa_Databasen
         }
         public override void RunFunction(int selection)
         {
-            var students = MenuInteraction.Context.Student.Where(e => e.ClassId == selection - 1);
-            List<string> classTitles = new List<string>();
-            foreach (var item in MenuInteraction.Context.Class)
-            {
-                classTitles.Add(item.ClassName);
-            }
+
+            var students = from stud in MenuInteraction.Context.Student.Where(e => e.ClassId == selection - 1)
+                           join classes in MenuInteraction.Context.Class on stud.ClassId equals classes.Id
+                           select new { clName = classes.ClassName, persId = stud.PersonalId, FName = stud.Fname, LName = stud.Lname };
 
             Console.Clear();
-            MenuInteraction.Headline(classTitles[selection - 2] + "\n");
+            MenuInteraction.Headline(menuSections[selection][4..].ToUpper() + "\n");
 
             foreach (var item in students)
             {
-                Console.WriteLine($"Personnr: {item.PersonalId} | Namn: {item.Fname} {item.Lname}");
+                Console.WriteLine($"Personnr: {item.persId} | Namn: {item.FName} {item.LName}");
             }
+
             Escape();
         }
     }

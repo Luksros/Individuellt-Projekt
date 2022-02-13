@@ -13,16 +13,15 @@ namespace Labb_3___Anropa_Databasen
         }
         public override void RunFunction(int selection)
         {
-            var employees = MenuInteraction.Context.Employee.Where(e => e.JobId == selection - 1);
-            var jobs = MenuInteraction.Context.Job;
-
             Console.Clear();
             MenuInteraction.Headline(menuSections[selection][4..].ToUpper() + "\n");
 
+            var employees = MenuInteraction.Context.Employee.Where(e => e.JobId == selection - 1);
             foreach (var item in employees)
             {
                 Console.WriteLine($"Personnr: {item.PersonalId} | Namn: {item.Fname} {item.Lname}");
             }
+
             Escape();
         }
     }

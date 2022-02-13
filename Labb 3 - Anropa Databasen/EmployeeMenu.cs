@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Labb_3___Anropa_Databasen
@@ -19,22 +20,7 @@ namespace Labb_3___Anropa_Databasen
             switch (selection)
             {
                 case 2:
-                    var employees = MenuInteraction.Context.Employee;
-                    List<string> jobStrings = new List<string>();
-                    foreach (var item in MenuInteraction.Context.Job)
-                    {
-                        jobStrings.Add(item.JobTitle);
-                    }
-
-                    MenuInteraction.Headline("VISA SAMTLIGA ANSTÄLLDA\n");
-
-                    foreach (var item in employees)
-                    {
-                        string space = new string(' ', (16 - ((item.Fname.Length) + (item.Lname.Length))));
-                        Console.WriteLine($"Personnr: {item.PersonalId} | Namn: {item.Fname} {item.Lname} {space} | Arbetsroll: {jobStrings[item.JobId - 1]}");
-                    }
-
-                    Escape();
+                    ShowAllEmployees();
                     break;
                 case 3:
                     MenuInteraction.RunMenu(empListMenu);
@@ -42,6 +28,29 @@ namespace Labb_3___Anropa_Databasen
                 default:
                     break;
             }          
+        }
+        public void ShowAllEmployees()
+        {
+            var employees = from emp in MenuInteraction.Context.Employee
+                            join jobs in MenuInteraction.Context.Job on emp.JobId equals jobs.Id
+                            orderby emp.JobId
+                            select new { JobId = emp.JobId, JobTitle = jobs.JobTitle, FName = emp.Fname, LName = emp.Lname, persId = emp.PersonalId };
+
+            MenuInteraction.Headline("VISA SAMTLIGA ANSTÄLLDA");
+
+            int titleCounter = 0;
+            foreach (var item in employees)
+            {
+                if (titleCounter < item.JobId)
+                {
+                    titleCounter++;
+                    MenuInteraction.PrintCyan($"\n{item.JobTitle}{new string(' ', 13 - item.JobTitle.Length)} - {MenuInteraction.Context.Employee.Where(e => e.JobId == titleCounter).Count()} st Anställda");
+                }
+                string space = new string(' ', (16 - ((item.FName.Length) + (item.LName.Length))));
+                Console.WriteLine($"Personnr: {item.persId} | Namn: {item.FName} {item.LName} {space}");
+            }
+
+            Escape();
         }
     }
 }

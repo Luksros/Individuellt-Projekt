@@ -22,7 +22,9 @@ namespace Labb_3___Anropa_Databasen
         public abstract void RunFunction(int selection);
         public void Escape()
         {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("\nTryck Esc för att återvända");
+            Console.ResetColor();
             ConsoleKey key;
             do
             {

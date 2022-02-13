@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Labb_3___Anropa_Databasen</RootNamespace>
+    <AssemblyName>Labb 3 - Anropa Databasen</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

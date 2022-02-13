@@ -26,13 +26,14 @@ namespace Labb_3___Anropa_Databasen.Models
         public virtual DbSet<Job> Job { get; set; }
         public virtual DbSet<Student> Student { get; set; }
         public virtual DbSet<StudentsInCourses> StudentsInCourses { get; set; }
+        public virtual DbSet<ActiveCourses> ActiveCourses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source = LAPTOP-TOC6LE29; Initial Catalog = School; Integrated Security = True;");
+                optionsBuilder.UseSqlServer("Data Source = LAPTOP-TOC6LE29; Initial Catalog = School; Integrated Security = True; MultipleActiveResultSets=true;");
             }
         }
 
@@ -151,6 +152,23 @@ namespace Labb_3___Anropa_Databasen.Models
                     .HasForeignKey(d => d.StudentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__StudentsI__Stude__34C8D9D1");
+            });
+
+            modelBuilder.Entity<ActiveCourses>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.ClassId).HasColumnName("ClassID");
+
+                entity.Property(e => e.CourseId).HasColumnName("CourseID");
+
+                entity.Property(e => e.EndDate).HasColumnType("date");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.StartDate).HasColumnType("date");
             });
 
             OnModelCreatingPartial(modelBuilder);
