@@ -126,7 +126,7 @@ namespace Labb_3___Anropa_Databasen.Models
 
             modelBuilder.Entity<StudentsInCourses>(entity =>
             {
-                entity.HasNoKey();
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CourseId).HasColumnName("CourseID");
 

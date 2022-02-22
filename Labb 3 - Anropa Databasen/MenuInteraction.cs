@@ -64,19 +64,17 @@ namespace Labb_3___Anropa_Databasen
         {
             bool escape = false;
             int rowSelection = 0;
-            List<Student> AllStudents = new List<Student>();
-            List<Grade> gradeNames = new List<Grade>();
-            List<Course> courses = new List<Course>();
+            List<Student> AllStudents = new List<Student>();          
             List<Class> Classes = new List<Class>();
-            List<StudentsInCourses> stuCourse = new List<StudentsInCourses>();
             foreach (var item in Context.Student.OrderBy(v => v.ClassId)) { AllStudents.Add(item); }
             foreach (var item in Context.Class) { Classes.Add(item); }
-            foreach (var item in MenuInteraction.Context.Grade) { gradeNames.Add(item); }
-            foreach (var item in MenuInteraction.Context.Course) { courses.Add(item); }
-            foreach (var item in MenuInteraction.Context.StudentsInCourses) { stuCourse.Add(item); }
 
             while (!escape)
             {
+                List<Grade> gradeNames = new List<Grade>();
+                List<Course> courses = new List<Course>();
+                foreach (var item in MenuInteraction.Context.Grade) { gradeNames.Add(item); }
+                foreach (var item in MenuInteraction.Context.Course) { courses.Add(item); }
                 Console.Clear();
                 for (int i = 0; i < thisMenu.menuSections.Count; i++)
                 {
@@ -104,9 +102,9 @@ namespace Labb_3___Anropa_Databasen
                 do
                 {
                     key = Console.ReadKey(intercept: true);
-                } while (key.Key != ConsoleKey.UpArrow && key.Key != ConsoleKey.DownArrow && key.Key != ConsoleKey.Enter && key.Key != ConsoleKey.Escape);
+                } while (key.Key != ConsoleKey.UpArrow && key.Key != ConsoleKey.DownArrow && key.Key != ConsoleKey.Enter && key.Key != ConsoleKey.Escape && key.Key != ConsoleKey.Tab);
 
-                if (key.Key != ConsoleKey.Escape && key.Key != ConsoleKey.Enter)
+                if (key.Key != ConsoleKey.Escape && key.Key != ConsoleKey.Enter && key.Key != ConsoleKey.Tab)
                 {
                     if (key.Key == ConsoleKey.UpArrow && rowSelection > 0)
                     {
@@ -120,6 +118,12 @@ namespace Labb_3___Anropa_Databasen
                 else if (key.Key == ConsoleKey.Enter)
                 {
                     rowSelection = thisMenu.SearchStudent(rowSelection);
+                }
+                else if(key.Key == ConsoleKey.Tab)
+                {
+                    thisMenu.StuUpdMenu.StudID = AllStudents[rowSelection].Id;
+                    MenuInteraction.RunMenu(thisMenu.StuUpdMenu);
+                    thisMenu.StuUpdMenu.StudID = -1;
                 }
                 else if (key.Key == ConsoleKey.Escape)
                 {
@@ -168,6 +172,26 @@ namespace Labb_3___Anropa_Databasen
                 }
             }
             return personnum.ToString();
+        }
+        public static string GradeInput()
+        {
+            string tempGrade = "";
+
+            Console.SetCursorPosition(26, 3);
+            ConsoleKeyInfo key = Console.ReadKey(intercept: true);
+            while (key.Key != ConsoleKey.A && key.Key != ConsoleKey.B && key.Key != ConsoleKey.C && key.Key != ConsoleKey.D && key.Key != ConsoleKey.E && key.Key != ConsoleKey.F && key.Key != ConsoleKey.Escape)
+            {
+                key = Console.ReadKey(intercept: true);
+            }
+            if (key.Key != ConsoleKey.Escape)
+            {
+                tempGrade = key.KeyChar.ToString().ToUpper();
+            }
+            else
+            {
+                return "ESC";
+            }
+            return tempGrade;
         }
         public static void Intro()
         {

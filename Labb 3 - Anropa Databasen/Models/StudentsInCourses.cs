@@ -9,6 +9,7 @@ namespace Labb_3___Anropa_Databasen.Models
 {
     public partial class StudentsInCourses
     {
+        public int Id { get; set; }
         public int CourseId { get; set; }
         public int StudentId { get; set; }
         public int? GradeId { get; set; }
@@ -17,5 +18,6 @@ namespace Labb_3___Anropa_Databasen.Models
         public virtual Course Course { get; set; }
         public virtual Grade Grade { get; set; }
         public virtual Student Student { get; set; }
+        
     }
 }

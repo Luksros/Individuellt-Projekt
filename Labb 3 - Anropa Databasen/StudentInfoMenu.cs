@@ -8,9 +8,11 @@ namespace Labb_3___Anropa_Databasen
 {
     public class StudentInfoMenu : Menu
     {
+        public StudentUpdateMenu StuUpdMenu;
         public StudentInfoMenu()
         {
-            menuSections.AddRange(new List<string>() { "VISA ENSKILD ELEV", "", "[↑] Visa Föregående           [ESC] Återgå", "[↓] Visa Nästa                [ENTER] Sök på personnummer", " " });
+            StuUpdMenu = new StudentUpdateMenu();
+            menuSections.AddRange(new List<string>() { "VISA ENSKILD ELEV", "", "[↑] Visa Föregående       [ESC] Återgå                [TAB] Ändra Info", "[↓] Visa Nästa            [ENTER] Sök på personnummer", " " });
         }
         public override void RunFunction(int selection) { }
         public int SearchStudent(int input)
